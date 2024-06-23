@@ -1,3 +1,3 @@
 # Grocery Bud
 
-![Icon](https://github.com/AdamBurysek/GroceryBudSimple/assets/114564710/bbb03161-772c-400f-bb48-374f4fe17cd9)
+![Icon](https://github.com/AdamBurysek/GroceryBudSimple/assets/114564710/e3352edb-3348-4bc9-9044-21e2e5c61d82)
