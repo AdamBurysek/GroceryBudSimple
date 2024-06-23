@@ -23,6 +23,7 @@ struct ContentView: View {
                         ) {
                             Image(systemName: item.isBuyed ? "checkmark.circle.fill": "circle")
                                 .foregroundStyle(item.isBuyed ? .green : .gray)
+                                .imageScale(.large)
                         }
                         .padding(.trailing, 10.0)
                         TextField("new item",text: $item.name)
