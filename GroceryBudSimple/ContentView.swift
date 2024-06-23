@@ -26,6 +26,11 @@ struct ContentView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: clearAll) {
+                        Label("Clear All", systemImage: "trash.fill")
+                    }
+                }
                 ToolbarItem {
                     Button(action: addItem) {
                         Label("Add Item", systemImage: "plus")
@@ -50,6 +55,14 @@ struct ContentView: View {
                 modelContext.delete(items[index])
             }
         }
+    }
+    
+    private func clearAll(){
+        withAnimation {
+                for item in items {
+                    modelContext.delete(item)
+                }
+            }
     }
 }
 
