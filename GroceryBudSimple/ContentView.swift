@@ -18,13 +18,17 @@ struct ContentView: View {
                 ForEach(items) { item in
                 label: do {
                     HStack{
-                        Image(systemName: item.isBuyed ? "checkmark.circle.fill": "circle")
-                            .foregroundStyle(item.isBuyed ? .green : .gray)
+                        Button(action: {toggleBuy(item: item)}
+                        ) {
+                            Image(systemName: item.isBuyed ? "checkmark.circle.fill": "circle")
+                                .foregroundStyle(item.isBuyed ? .green : .gray)
+                        }
+                        .padding(.trailing, 10.0)
                         Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
                     }
-                       
                     }
                 }
+                
                 .onDelete(perform: deleteItems)
             }
             .toolbar {
@@ -60,6 +64,10 @@ struct ContentView: View {
                 modelContext.delete(items[index])
             }
         }
+    }
+    
+    private func toggleBuy(item:Item) {
+        item.isBuyed.toggle()
     }
     
     private func clearAll(){
