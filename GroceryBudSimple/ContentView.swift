@@ -18,34 +18,38 @@ struct ContentView: View {
         NavigationSplitView {
             List {
                 ForEach(items) { item in
-                @Bindable var item = item
-                label: do {
-                        HStack{
-                            Button(action: {toggleBuy(item: item)}
-                            ) {
-                                Image(systemName: item.isBuyed ? "checkmark.circle.fill": "circle")
-                                    .foregroundStyle(item.isBuyed ? .green : .gray)
-                                    .imageScale(.large)
-                            }
-                            .padding(.trailing, 10.0)
-                            TextField("new item",text: $item.name)
-                            }
+                    @Bindable var item = item
+                    HStack {
+                        Button(action: {
+                            toggleBuy(item: item)
+                        }) {
+                            Image(systemName: item.isBuyed ? "checkmark.circle.fill" : "circle")
+                                .foregroundStyle(item.isBuyed ? .green : .gray)
+                                .imageScale(.large)
+                        }
+                        .padding(.trailing, 10.0)
+                        TextField("new item", text: $item.name)
                     }
                 }
                 .onDelete(perform: deleteItems)
             }
-                .alert(isPresented: $isClearAlertShown, content: {
-                    Alert(title: Text("Do you want clear all items?"),
-                          primaryButton: Alert.Button.destructive(Text("Clear all items"), action: {
-                            clearAll()
-                    }), secondaryButton: Alert.Button.cancel())
-                })
+            .alert(isPresented: $isClearAlertShown) {
+                Alert(
+                    title: Text("Do you want clear all items?"),
+                    primaryButton: Alert.Button.destructive(Text("Clear all items"), action: {
+                        clearAll()
+                    }),
+                    secondaryButton: Alert.Button.cancel()
+                )
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     EditButton()
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {isClearAlertShown.toggle()}) {
+                    Button(action: {
+                        isClearAlertShown.toggle()
+                    }) {
                         Label("Clear All", systemImage: "trash.fill")
                     }
                 }
@@ -62,7 +66,7 @@ struct ContentView: View {
 
     private func addItem() {
         withAnimation {
-            let newItem = Item(timestamp: Date(),name: "", isBuyed: false)
+            let newItem = Item(timestamp: Date(), name: "", isBuyed: false)
             modelContext.insert(newItem)
         }
     }
@@ -75,16 +79,16 @@ struct ContentView: View {
         }
     }
     
-    private func toggleBuy(item:Item) {
+    private func toggleBuy(item: Item) {
         item.isBuyed.toggle()
     }
     
-    private func clearAll(){
+    private func clearAll() {
         withAnimation {
-                for item in items {
-                    modelContext.delete(item)
-                }
+            for item in items {
+                modelContext.delete(item)
             }
+        }
     }
 }
 
