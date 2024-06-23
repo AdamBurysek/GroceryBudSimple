@@ -17,16 +17,21 @@ struct ContentView: View {
             List {
                 ForEach(items) { item in
                 label: do {
+                    HStack{
+                        Image(systemName: item.isBuyed ? "checkmark.circle.fill": "circle")
+                            .foregroundStyle(item.isBuyed ? .green : .gray)
                         Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                    }
+                       
                     }
                 }
                 .onDelete(perform: deleteItems)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     EditButton()
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button(action: clearAll) {
                         Label("Clear All", systemImage: "trash.fill")
                     }
@@ -44,7 +49,7 @@ struct ContentView: View {
 
     private func addItem() {
         withAnimation {
-            let newItem = Item(timestamp: Date())
+            let newItem = Item(timestamp: Date(), isBuyed: false)
             modelContext.insert(newItem)
         }
     }
