@@ -16,6 +16,7 @@ struct ContentView: View {
         NavigationSplitView {
             List {
                 ForEach(items) { item in
+                @Bindable var item = item
                 label: do {
                     HStack{
                         Button(action: {toggleBuy(item: item)}
@@ -24,7 +25,7 @@ struct ContentView: View {
                                 .foregroundStyle(item.isBuyed ? .green : .gray)
                         }
                         .padding(.trailing, 10.0)
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                        TextField("new item",text: $item.name)
                     }
                     }
                 }
@@ -53,7 +54,7 @@ struct ContentView: View {
 
     private func addItem() {
         withAnimation {
-            let newItem = Item(timestamp: Date(), isBuyed: false)
+            let newItem = Item(timestamp: Date(),name: "", isBuyed: false)
             modelContext.insert(newItem)
         }
     }

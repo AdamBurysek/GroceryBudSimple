@@ -11,10 +11,12 @@ import SwiftData
 @Model
 final class Item {
     var timestamp: Date
+    var name: String
     var isBuyed: Bool
     
-    init(timestamp: Date, isBuyed: Bool) {
+    init(timestamp: Date, name: String, isBuyed: Bool) {
         self.timestamp = timestamp
+        self.name = name
         self.isBuyed = isBuyed
     }
 }
