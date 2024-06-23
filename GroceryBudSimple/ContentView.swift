@@ -11,6 +11,8 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
+    
+    @State private var isClearAlertShown = false
 
     var body: some View {
         NavigationSplitView {
@@ -18,27 +20,32 @@ struct ContentView: View {
                 ForEach(items) { item in
                 @Bindable var item = item
                 label: do {
-                    HStack{
-                        Button(action: {toggleBuy(item: item)}
-                        ) {
-                            Image(systemName: item.isBuyed ? "checkmark.circle.fill": "circle")
-                                .foregroundStyle(item.isBuyed ? .green : .gray)
-                                .imageScale(.large)
-                        }
-                        .padding(.trailing, 10.0)
-                        TextField("new item",text: $item.name)
-                    }
+                        HStack{
+                            Button(action: {toggleBuy(item: item)}
+                            ) {
+                                Image(systemName: item.isBuyed ? "checkmark.circle.fill": "circle")
+                                    .foregroundStyle(item.isBuyed ? .green : .gray)
+                                    .imageScale(.large)
+                            }
+                            .padding(.trailing, 10.0)
+                            TextField("new item",text: $item.name)
+                            }
                     }
                 }
-                
                 .onDelete(perform: deleteItems)
             }
+                .alert(isPresented: $isClearAlertShown, content: {
+                    Alert(title: Text("Do you want clear all items?"),
+                          primaryButton: Alert.Button.destructive(Text("Clear all items"), action: {
+                            clearAll()
+                    }), secondaryButton: Alert.Button.cancel())
+                })
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     EditButton()
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: clearAll) {
+                    Button(action: {isClearAlertShown.toggle()}) {
                         Label("Clear All", systemImage: "trash.fill")
                     }
                 }
