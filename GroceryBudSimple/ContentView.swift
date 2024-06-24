@@ -70,7 +70,7 @@ struct ContentView: View {
         withAnimation {
             let newItem = Item(timestamp: Date(), name: "", isBuyed: false)
             modelContext.insert(newItem)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                             focusedItemID = newItem.id
                         }
         }
