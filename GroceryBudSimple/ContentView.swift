@@ -13,6 +13,7 @@ struct ContentView: View {
     @Query private var items: [Item]
     
     @State private var isClearAlertShown = false
+    @FocusState private var focusedItemID: PersistentIdentifier?
 
     var body: some View {
         NavigationSplitView {
@@ -29,6 +30,7 @@ struct ContentView: View {
                         }
                         .padding(.trailing, 10.0)
                         TextField("New Item", text: $item.name)
+                            .focused($focusedItemID, equals: item.id)
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -68,6 +70,9 @@ struct ContentView: View {
         withAnimation {
             let newItem = Item(timestamp: Date(), name: "", isBuyed: false)
             modelContext.insert(newItem)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            focusedItemID = newItem.id
+                        }
         }
     }
 
