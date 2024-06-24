@@ -28,7 +28,7 @@ struct ContentView: View {
                                 .imageScale(.large)
                         }
                         .padding(.trailing, 10.0)
-                        TextField("new item", text: $item.name)
+                        TextField("New Item", text: $item.name)
                     }
                 }
                 .onDelete(perform: deleteItems)
