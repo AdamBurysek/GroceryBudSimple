@@ -31,6 +31,8 @@ struct ContentView: View {
                         .padding(.trailing, 10.0)
                         TextField("New Item", text: $item.name)
                             .focused($focusedItemID, equals: item.id)
+                            .strikethrough(item.isBuyed ? true : false, color: .gray)
+                            .foregroundColor(item.isBuyed ? .gray : .primary)
                     }
                 }
                 .onDelete(perform: deleteItems)
